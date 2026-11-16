@@ -3,9 +3,8 @@
   Adventures with Oppy — project website
   Written with AI assistance (Claude, by Anthropic) for the Adventures with Oppy team.
   How to edit: see README.md. Quick version:
-    1. Paste your links into SITE settings near the bottom of this file (search for "SETTINGS").
-    2. Replace every [bracketed placeholder] (search for class="fill").
-    3. Drop your images/videos into the assets folder using the names listed in README.md.
+    1. Paste your video link into SITE settings near the bottom of this file (search for "SETTINGS").
+    2. CAD renders go in the cad folder; screenshots go in assets/screens (names in README.md).
 -->
 <html lang="en">
 <head>
@@ -297,9 +296,61 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
 .pick.got::after{content:" \2713"}
 #dig-input{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;border:0;padding:0;margin:0}
 
+
+/* ---------- Arm minigames ---------- */
+.mg-flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.mg-flow li{border-top:2px solid var(--ink);padding-top:14px;font-size:16px;color:var(--ink-soft)}
+.mg-flow b{display:block;font-size:21px;font-weight:760;font-stretch:115%;color:var(--ink);margin-bottom:2px}
+.mg-flow b span{color:var(--rust);margin-right:8px;font-variant-numeric:tabular-nums}
+.mg-fail{margin:18px 0 0;font-size:16.5px;color:var(--ink-soft);max-width:66ch}
+.mg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,3.5vw,56px);align-items:center;margin-top:72px}
+.mg-play{background:var(--ink);color:var(--sky);border-radius:var(--r);padding:18px}
+.mg-svg{width:100%;height:auto;border-radius:10px;display:block}
+.rg,.mi{touch-action:none;cursor:crosshair;max-width:440px;margin:0 auto}
+.mg-bar{height:10px;border-radius:99px;background:#4A3628;overflow:hidden;margin-top:14px}
+.mg-bar i{display:block;height:100%;width:0;background:var(--berry-light)}
+.mg-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px;font-size:15px;color:#E4D5BE}
+.mg-btn{appearance:none;font:inherit;font-size:14.5px;font-weight:650;padding:8px 14px;border-radius:8px;border:1.5px solid #7A6553;background:transparent;color:var(--sky);cursor:pointer;line-height:1.2;user-select:none;-webkit-user-select:none}
+.mg-btn:hover{border-color:var(--sky)}
+.mg-btn.primary{background:var(--berry-light);border-color:var(--berry-light);color:#000}
+.mg-btn[aria-pressed="true"]{background:var(--sky);color:var(--ink);border-color:var(--sky)}
+.mg-btn.held{background:#fff;color:#000;border-color:#fff}
+.mg-status{margin:12px 0 0;font-size:15.5px;line-height:1.45;color:#F3E8D6;min-height:2.9em;max-width:none}
+.mg-tag{margin:6px 0 0;font-family:var(--mono);font-size:11px;color:#B9A48C}
+.mg-text h3{font-size:clamp(24px,2.3vw,30px);font-stretch:116%;margin-bottom:4px}
+.mg-text h4{margin:18px 0 6px;font-size:15px;font-weight:760;font-stretch:108%;color:var(--rust)}
+.mg-text p{font-size:17px;line-height:1.58;margin-bottom:.6em}
+.rg-target .ring{fill:rgba(255,255,255,.14);stroke:#fff;stroke-width:3}
+.rg-target.hit .ring{fill:rgba(143,169,234,.4);stroke:var(--berry-light)}
+.mi-item{cursor:pointer;outline:none}
+.mi-item .hit{fill:transparent;stroke:transparent;stroke-width:3}
+.mi-item:focus-visible .hit{stroke:#fff;stroke-dasharray:4 3}
+.mi-item.found .hit{stroke:var(--berry-light);stroke-dasharray:none}
+.mi-item.wrong .hit{stroke:#FF8B66;stroke-dasharray:none}
+.ax-view{max-width:440px;margin:0 auto}
+.ax-track{position:relative;height:36px;border-radius:8px;background:#1E140E;border:1.5px solid #4A3628;margin-top:14px;overflow:hidden;touch-action:none;cursor:pointer;user-select:none;-webkit-user-select:none}
+.ax-zone{position:absolute;top:0;bottom:0;left:40%;width:24%;background:rgba(143,169,234,.32);border-left:2px solid var(--berry-light);border-right:2px solid var(--berry-light)}
+.ax-bar{position:absolute;top:5px;bottom:5px;left:10%;width:7%;background:#fff;border-radius:4px}
+.ax-track.in .ax-zone{background:rgba(143,169,234,.55)}
+.mb-graph{background:#1E140E}
+.mb-graph .axis{stroke:#6F6157;stroke-width:1.2}
+.mb-graph .tick{fill:#B9A48C;font-family:var(--mono);font-size:10px;text-anchor:middle}
+.mb-line{fill:none;stroke:#F3E8D6;stroke-width:2;stroke-linejoin:round}
+.mb-label{fill:var(--berry-light);font-family:var(--font);font-weight:700;font-size:14px;text-anchor:middle}
+
+/* ---------- Click to enlarge ---------- */
+.slot.zoomable{cursor:zoom-in}
+.slot.zoomable::after{content:"Click to enlarge";position:absolute;right:8px;bottom:8px;font-size:12.5px;font-weight:650;padding:4px 9px;border-radius:6px;background:rgba(42,29,21,.82);color:var(--sky);opacity:0;transition:opacity .2s}
+.slot.zoomable:hover::after,.slot.zoomable:focus-visible::after{opacity:1}
+.lightbox{border:0;padding:0;background:transparent;max-width:94vw;max-height:94vh;overflow:visible;color:#fff}
+.lightbox::backdrop{background:rgba(0,0,0,.86)}
+.lightbox img,.lightbox video{display:block;max-width:92vw;max-height:80vh;width:auto;height:auto;object-fit:contain;border-radius:10px;background:#F6EEDF}
+.lb-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:12px}
+.lb-bar p{margin:0;font-size:16px;color:#EEE}
+
 /* ---------- How we made it ---------- */
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
-.gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;margin-top:20px}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:20px}
 .gallery figure,.screens figure{margin:0}
 .gallery figcaption{margin-top:10px;font-size:15.5px;line-height:1.4;color:var(--ink-soft)}
 .gallery figcaption b{display:block;font-weight:740;font-stretch:110%;font-size:16.5px;color:var(--ink)}
@@ -313,7 +364,7 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
 .screens{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:20px}
 .screens .slot{aspect-ratio:16/9}
 .screens figcaption{margin-top:10px;font-size:15.5px;color:var(--ink-soft)}
-.tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:20px 0 0}
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:20px 0 0}
 .tools div{border-top:1px solid var(--rule);padding-top:12px}
 .tools dt{font-size:14.5px;color:var(--ink-soft)}
 .tools dd{margin:4px 0 0;font-weight:700;font-stretch:108%;font-size:18px}
@@ -330,7 +381,7 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
 .who p{font-size:17px;color:var(--ink-soft);margin:0}
 .team-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:44px;align-items:start}
 .team-photo .slot{aspect-ratio:3/2}
-.members{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.members{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
 .members li{border-top:2px solid var(--ink);padding-top:12px}
 .members b{display:block;font-size:19px;font-stretch:110%}
 .members span{display:block;font-size:15.5px;color:var(--ink-soft)}
@@ -365,10 +416,12 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
   .rebuild-grid{grid-template-columns:1fr}
   .viewer{position:relative;top:auto}
   .loop,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
   .tools{grid-template-columns:repeat(2,minmax(0,1fr))}
   .story-grid,.team-grid{grid-template-columns:1fr}
   .who{grid-template-columns:1fr;gap:28px}
+  .mg{grid-template-columns:1fr}
+  .mg-flow{grid-template-columns:repeat(2,minmax(0,1fr))}
   .dig-top{grid-template-columns:1fr}
 }
 @media (max-width:720px){
@@ -376,8 +429,8 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
   .hud{font-size:11px}
   .tabs{display:flex;overflow-x:auto;gap:6px;padding-bottom:4px}
   .tab{flex:0 0 auto;padding:10px 12px;font-size:15px}
-  .loop,.steps,.screens,.members{grid-template-columns:1fr}
-  .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .loop,.steps,.screens,.members,.tools{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr}
   .sources{columns:1}
   .foot .wrap{grid-template-columns:1fr}
   .vp .hud{font-size:10px;padding:8px 10px}
@@ -428,7 +481,6 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
       <div class="actions">
         <a class="btn btn-solid" href="#trailer">Watch the trailer</a>
         <a class="btn btn-line" href="#dig">Try the dig</a>
-        <a class="btn btn-line" data-link="play" href="#" hidden>Play the game</a>
       </div>
       <p class="entry">Our entry for the 2026 NASA Space Apps Challenge, “Abandoned but not Forgotten: Storytelling about NASA’s Discarded Equipment on the Moon and Mars.”</p>
     </div>
@@ -484,10 +536,11 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
     <li><a href="#story">The real Oppy</a></li>
     <li><a href="#rebuild">How it plays</a></li>
     <li><a href="#dig">Try the dig</a></li>
+    <li><a href="#minigames">Minigames</a></li>
     <li><a href="#making">How we made it</a></li>
     <li><a href="#accuracy">Accuracy</a></li>
     <li><a href="#team">Team</a></li>
-    <li><a href="#sources">Sources</a></li>
+    <li><a href="#sources">NASA Sources</a></li>
   </ul>
 </nav>
 
@@ -499,11 +552,6 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
     <h2 class="h2" id="trailer-h">Gameplay in 30 seconds</h2>
     <div class="video" id="video">
       <div class="ph"><strong>Your 30-second gameplay video goes here</strong>Paste a YouTube, Vimeo, or Google Drive link into <code>SITE.video</code> near the bottom of index.html, or add <code>assets/trailer.mp4</code></div>
-    </div>
-    <div class="below-video">
-      <a class="btn btn-solid" data-link="play" href="#" hidden>Play the game</a>
-      <a class="btn btn-line" data-link="code" href="#" hidden>See the code</a>
-      <a class="btn btn-line" data-link="project" href="#" hidden>Our Space Apps project page</a>
     </div>
 
     <div class="sub">
@@ -627,7 +675,7 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
         <div class="panel" role="tabpanel" id="panel-4" aria-labelledby="tab-4" data-stage="4" tabindex="0" hidden>
           <h3>The instrument arm</h3>
           <h4>In the game</h4>
-          <p>Four tools are buried around the site. Together they let you study a rock up close: grind it, look at it, and test what it’s made of.</p>
+          <p>Four tools are buried around the site. Each one becomes its own minigame: grind the rock, spot the round grains, hold the APXS steady, and read the Mössbauer graph. <a href="#minigames">See the minigames</a>.</p>
           <h4>On the real rover</h4>
           <p>Oppy’s arm moved much like yours, with a shoulder, elbow, and wrist. A turret at its end held four tools:</p>
           <dl>
@@ -695,15 +743,136 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
   </div>
 </section>
 
+<!-- ===================== ARM MINIGAMES ===================== -->
+<section class="section band" id="minigames" aria-labelledby="mg-h">
+  <div class="wrap">
+    <h2 class="h2" id="mg-h">Four tools, four minigames</h2>
+    <p class="lead">Once the arm is rebuilt, every tool on it becomes a minigame, and together they test one rock at a time. Each demo below is a small web version of one minigame from the game, so you can try it here.</p>
+    <ol class="mg-flow">
+      <li><b><span>1</span>Grind</b>Rock abrasion tool</li>
+      <li><b><span>2</span>Look</b>Microscopic Imager</li>
+      <li><b><span>3</span>Measure</b>APXS</li>
+      <li><b><span>4</span>Identify</b>Mössbauer spectrometer</li>
+    </ol>
+    <p class="mg-fail">No round grains, no iron boost, or not hematite? The rock fails, and you drive to another hematite-rich rock to start again.</p>
+
+    <article class="mg" aria-labelledby="mg1-h">
+      <div class="mg-play" id="rat-game">
+        <svg class="mg-svg rg" viewBox="0 0 300 300" role="img" aria-label="Rock surface with a circular grinding path and a moving target circle">
+          <rect width="300" height="300" fill="#CDB28A"/>
+          <g class="rg-lam" fill="none" stroke="#B0946C" stroke-width="1.3" opacity=".75"></g>
+          <g class="rg-out"></g>
+          <circle cx="150" cy="150" r="104" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 6" opacity=".75"/>
+          <g class="rg-fresh" style="opacity:0"></g>
+          <g class="rg-cuts" style="opacity:0"></g>
+          <g class="rg-dust" style="opacity:0"></g>
+          <g class="rg-target"><circle class="ring" r="26"/><circle r="4" fill="#fff"/></g>
+        </svg>
+        <div class="mg-bar" aria-hidden="true"><i></i></div>
+        <div class="mg-controls"><button class="mg-btn primary mg-start" type="button">Start grinding</button><button class="mg-btn mg-skip" type="button" hidden>Skip to the result</button></div>
+        <p class="mg-status" aria-live="polite">Follow the moving circle with your cursor or finger.</p>
+        <p class="mg-tag">Web demo. AI-generated illustration.</p>
+      </div>
+      <div class="mg-text">
+        <h3 id="mg1-h">1. Grind: rock abrasion tool</h3>
+        <h4>How it plays</h4>
+        <p>Pick a spot on a hematite-rich rock. A target circle sweeps around it, and you follow it: while your cursor is inside the circle the grinding bar fills, and when you slip out it drains. Then you brush the dust away with the same move.</p>
+        <p>Last, look for small gray dots in the fresh circle. Some gray dots and decoys already poke out of the rock before you grind. No dots inside the circle? Try another rock.</p>
+        <h4>The real tool</h4>
+        <p>The real RAT ground a circle 45 mm across and about 5 mm deep, then brushed it clean so the other tools could study fresh rock. Hard volcanic rock took about two hours.</p>
+      </div>
+    </article>
+
+    <article class="mg" aria-labelledby="mg2-h">
+      <div class="mg-play" id="mi-game">
+        <svg class="mg-svg mi" viewBox="0 0 300 300" role="group" aria-label="Black-and-white close-up of the ground circle. Select the round grains.">
+          <defs>
+            <radialGradient id="mi-smooth" cx=".35" cy=".32" r=".75"><stop offset="0" stop-color="#D6D6D6"/><stop offset=".55" stop-color="#8E8E8E"/><stop offset="1" stop-color="#555"/></radialGradient>
+            <filter id="mi-blur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.6"/></filter>
+            <clipPath id="mi-clip"><circle cx="150" cy="150" r="146"/></clipPath>
+          </defs>
+          <g clip-path="url(#mi-clip)">
+            <rect width="300" height="300" fill="#9C9C9C"/>
+            <g class="mi-sand"></g>
+            <g class="mi-items"></g>
+          </g>
+          <circle cx="150" cy="150" r="146" fill="none" stroke="#000" stroke-width="3"/>
+        </svg>
+        <div class="mg-controls"><span class="mi-count">Round grains found: 0 of 5</span><button class="mg-btn mi-reset" type="button">Start over</button></div>
+        <p class="mg-status" aria-live="polite">Find the 5 grains that are perfectly round, the same size, and smooth.</p>
+        <p class="mg-tag">Web demo. AI-generated illustration.</p>
+      </div>
+      <div class="mg-text">
+        <h3 id="mg2-h">2. Look: Microscopic Imager</h3>
+        <h4>How it plays</h4>
+        <p>Zoom into the circle you just ground and spot every possible round grain. They hide among pebbles, dust clumps, and cracks. A real round grain has all three traits: perfectly round, the same size as the others, and smooth. Every decoy is missing at least one, and if you pick a decoy, the game tells you which trait it fails.</p>
+        <p>The game calls them “round grains” here on purpose. Players don’t learn they’re the famous blueberries until the end.</p>
+        <h4>The real tool</h4>
+        <p>The real Microscopic Imager took black-and-white close-ups at about 30 micrometers per pixel. At Eagle Crater the spheres were 3 to 6 millimeters across, about the size of BBs.</p>
+      </div>
+    </article>
+
+    <article class="mg" aria-labelledby="mg3-h">
+      <div class="mg-play" id="apxs-game">
+        <svg class="mg-svg ax-view" viewBox="0 0 300 150" aria-hidden="true">
+          <rect width="300" height="150" fill="#CDB28A"/>
+          <circle cx="150" cy="75" r="56" fill="#B49A77"/>
+          <g fill="#6B6661"><circle cx="128" cy="62" r="5"/><circle cx="160" cy="52" r="4.5"/><circle cx="170" cy="88" r="5"/><circle cx="137" cy="95" r="4.2"/><circle cx="152" cy="72" r="4.6"/></g>
+          <path d="M150 12v14M150 124v14M86 75h14M200 75h14" stroke="#fff" stroke-width="2"/>
+          <g class="ax-head"><circle cx="150" cy="75" r="36" fill="none" stroke="#2A1D15" stroke-width="9" opacity=".85"/><circle cx="150" cy="75" r="36" fill="none" stroke="#E9E3D6" stroke-width="4"/></g>
+        </svg>
+        <div class="ax-track" aria-hidden="true"><div class="ax-zone"></div><div class="ax-bar"></div></div>
+        <div class="mg-bar" aria-hidden="true"><i></i></div>
+        <div class="mg-controls">
+          <span class="seg ax-rock" role="group" aria-label="Choose a rock"><button class="mg-btn" type="button" aria-pressed="true" data-rock="a">Rock A</button><button class="mg-btn" type="button" aria-pressed="false" data-rock="b">Rock B</button></span>
+          <button class="mg-btn primary ax-start" type="button">Start scan</button>
+          <button class="mg-btn ax-hold" type="button" hidden>Hold to push right</button>
+        </div>
+        <p class="mg-status" aria-live="polite">Hold to push the white bar right, let go to let it slide back. Keep it inside the blue zone.</p>
+        <p class="mg-tag">Web demo. AI-generated illustration.</p>
+      </div>
+      <div class="mg-text">
+        <h3 id="mg3-h">3. Measure: APXS</h3>
+        <h4>How it plays</h4>
+        <p>Place the APXS over the ground circle and keep it steady with a fishing-style bar. Hold to push your bar one way, let go and it drifts back. Inside the moving zone, the instrument holds still and the scan fills. Outside it, the instrument starts to stray from its mark.</p>
+        <p>A finished scan reads either “Iron-rich, consistent with hematite” or “No iron boost here. These grains are something else.” No iron boost means back to another rock: grind and look again.</p>
+        <h4>The real tool</h4>
+        <p>The real APXS was pressed against the rock by the arm and counted the X-rays coming back. A good reading took 10 hours or more, and most were taken at night.</p>
+      </div>
+    </article>
+
+    <article class="mg" aria-labelledby="mg4-h">
+      <div class="mg-play" id="mb-game">
+        <svg class="mg-svg mb-graph" viewBox="0 0 320 200" role="img" aria-label="Mössbauer spectrum graph">
+          <g class="mb-axes"></g>
+          <path class="mb-line" d=""/>
+          <text class="mb-label" x="160" y="26"></text>
+        </svg>
+        <div class="mg-controls"><span class="mb-hint">Scan a rock:</span><span class="seg mb-rocks" role="group" aria-label="Choose a rock to scan"><button class="mg-btn" type="button" data-mineral="olivine">Rock 1</button><button class="mg-btn" type="button" data-mineral="pyroxene">Rock 2</button><button class="mg-btn" type="button" data-mineral="hematite">Rock 3</button></span></div>
+        <p class="mg-status" aria-live="polite">Each rock passed the APXS test. Which one is really hematite?</p>
+        <p class="mg-tag">Web demo. Schematic graphs, AI-generated illustration.</p>
+      </div>
+      <div class="mg-text">
+        <h3 id="mg4-h">4. Identify: Mössbauer spectrometer</h3>
+        <h4>How it plays</h4>
+        <p>Scan the same spot again and read the graph. Two peaks mean olivine or pyroxene, volcanic minerals that also contain iron. If you see that, it’s back to a new rock. Six peaks mean hematite.</p>
+        <p>Case closed: the round grains are hematite, the same mineral the orbiter saw from space. Only now does the game reveal they’re the blueberries.</p>
+        <h4>The real tool</h4>
+        <p>On Mars, Opportunity’s Mössbauer found olivine and pyroxene mostly in dark volcanic sand, and hematite’s six peaks at Berry Bowl. The rover measured radiation bouncing back off the rock, so its graphs show peaks pointing up.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
 <!-- ===================== HOW WE MADE IT ===================== -->
-<section class="section band" id="making" aria-labelledby="making-h">
+<section class="section" id="making" aria-labelledby="making-h">
   <div class="wrap">
     <h2 class="h2" id="making-h">How we made it</h2>
-    <p class="lead">We modeled every rover part in the game ourselves in <span class="fill">[CAD software]</span>, then built the game around those models in <span class="fill">[game engine]</span>.</p>
+    <p class="lead">We modeled every rover part in the game ourselves in SolidWorks, then built the game around those models in Godot.</p>
 
     <ol class="steps">
       <li><b><span>1</span>Research the real part</b><p>We read NASA and science-team descriptions of each instrument: what it looked like, how it worked, and what it found.</p></li>
-      <li><b><span>2</span>Model it in CAD</b><p>We built each part as a 3D model <span class="fill">[how: e.g. from NASA photos and diagrams]</span>.</p></li>
+      <li><b><span>2</span>Model it in CAD</b><p>We built each part as a 3D model in SolidWorks, working from NASA photos and diagrams of the real rover.</p></li>
       <li><b><span>3</span>Bring it into the game</b><p>Each model spins at the top of the dig screen, next to an animation of the part at work.</p></li>
       <li><b><span>4</span>Write the fact</b><p>Every dig sentence teaches one real thing about that part.</p></li>
     </ol>
@@ -726,17 +895,16 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
     <div class="sub">
       <h3>Built with</h3>
       <dl class="tools">
-        <div><dt>Game engine</dt><dd><span class="fill">[engine]</span></dd></div>
-        <div><dt>3D modeling</dt><dd><span class="fill">[CAD software]</span></dd></div>
-        <div><dt>Art and sound</dt><dd><span class="fill">[tools]</span></dd></div>
-        <div><dt>Built in</dt><dd><span class="fill">[time, e.g. one hackathon weekend]</span></dd></div>
+        <div><dt>Game engine</dt><dd>Godot</dd></div>
+        <div><dt>3D modeling</dt><dd>SolidWorks</dd></div>
+        <div><dt>References</dt><dd>NASA photos and diagrams</dd></div>
       </dl>
     </div>
   </div>
 </section>
 
 <!-- ===================== ACCURACY ===================== -->
-<section class="section" id="accuracy" aria-labelledby="acc-h">
+<section class="section band" id="accuracy" aria-labelledby="acc-h">
   <div class="wrap">
     <h2 class="h2" id="acc-h">What’s real, and what we changed</h2>
     <p class="lead">Accuracy matters to us, so here is every place where the game bends reality, next to what actually happened.</p>
@@ -749,7 +917,7 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
         <tr><td data-th="In our game">Mini-TES is its own part, and you dig it up.</td><td data-th="On the real Opportunity">Mini-TES sat mostly inside the rover’s warm body. The mast doubled as its periscope, with a pointing mirror at the top.</td></tr>
         <tr><td data-th="In our game">A Mini-TES scan takes a few seconds.</td><td data-th="On the real Opportunity">Mini-TES paused for about two seconds to collect a single pixel, so building a full panorama was slow work.</td></tr>
         <tr><td data-th="In our game">The arm’s tools work in moments.</td><td data-th="On the real Opportunity">Grinding hard volcanic rock took about two hours. A good APXS reading took 10 hours or more, and one Mössbauer measurement took about 12.</td></tr>
-        <tr><td data-th="In our game">You test one hematite-rich rock.</td><td data-th="On the real Opportunity">Single berries were too small to measure alone. The team measured a cluster that had collected in a dip nicknamed Berry Bowl, then compared it with a berry-free patch beside it.</td></tr>
+        <tr><td data-th="In our game">You test hematite-rich rocks one at a time until one passes every test.</td><td data-th="On the real Opportunity">Single berries were too small to measure alone. The team measured a cluster that had collected in a dip nicknamed Berry Bowl, then compared it with a berry-free patch beside it.</td></tr>
         <tr><td data-th="In our game">The discovery comes at the end of your journey.</td><td data-th="On the real Opportunity">Oppy’s cameras spotted the spheres soon after she landed in January 2004. Proving they were hematite took until March 18, 2004.</td></tr>
       </tbody>
     </table>
@@ -757,39 +925,34 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
 </section>
 
 <!-- ===================== WHO IT'S FOR ===================== -->
-<section class="section band" id="who" aria-labelledby="who-h">
+<section class="section" id="who" aria-labelledby="who-h">
   <div class="wrap">
     <h2 class="h2" id="who-h">Who it’s for</h2>
     <div class="who">
       <div><h3>Kids and casual space fans</h3><p>No science background needed. You learn each instrument the moment you need it, so every fact arrives as a new ability.</p></div>
-      <div><h3>Learning by doing</h3><p>Players don’t just read facts. They type them to dig, then use each tool in the same order the real science team did.</p></div>
+      <div><h3>Learning by doing</h3><p>Players don’t just read facts. They type them to dig, then play a minigame with each tool, in the same order the real science team used them.</p></div>
       <div><h3>A machine worth remembering</h3><p>Oppy is still sitting on Mars. We want players to finish the game feeling like they know her, and curious about every robot we’ve left out there.</p></div>
     </div>
   </div>
 </section>
 
 <!-- ===================== TEAM ===================== -->
-<section class="section" id="team" aria-labelledby="team-h">
+<section class="section band" id="team" aria-labelledby="team-h">
   <div class="wrap">
     <h2 class="h2" id="team-h">The team</h2>
-    <p class="lead"><span class="fill">[Team name]</span>, <span class="fill">[local event and city]</span>.</p>
-    <div class="team-grid">
-      <div class="team-photo"><div class="slot cover" data-base="assets/team" data-key="team" data-alt="Photo of the Adventures with Oppy team"><div class="ph"><strong>Team photo</strong><code>assets/team.jpg</code></div></div></div>
-      <ul class="members">
-        <li><b><span class="fill">[Name]</span></b><span><span class="fill">[Role, e.g. CAD and 3D models]</span></span></li>
-        <li><b><span class="fill">[Name]</span></b><span><span class="fill">[Role, e.g. game programming]</span></span></li>
-        <li><b><span class="fill">[Name]</span></b><span><span class="fill">[Role, e.g. research and writing]</span></span></li>
-        <li><b><span class="fill">[Name]</span></b><span><span class="fill">[Role, e.g. art and sound]</span></span></li>
-      </ul>
-    </div>
+    <p class="lead">Team Adventures with Oppy.</p>
+    <ul class="members">
+      <li><b>Brian Chen</b><span>3D modeling and art design</span></li>
+      <li><b>Justin Lin</b><span>Research and 3D modeling</span></li>
+      <li><b>Ryan Shan</b><span>Game development and story design</span></li>
+    </ul>
   </div>
 </section>
 
 <!-- ===================== SOURCES ===================== -->
-<section class="section band" id="sources" aria-labelledby="src-h">
+<section class="section" id="sources" aria-labelledby="src-h">
   <div class="wrap">
-    <h2 class="h2" id="src-h">Sources</h2>
-    <p class="lead">Every fact on this page comes from these NASA and science-team sources.</p>
+    <h2 class="h2" id="src-h">NASA Sources</h2>
     <ol class="sources">
       <li><a href="https://science.nasa.gov/mission/mer-opportunity/">Opportunity mission overview</a><small>NASA Science</small></li>
       <li><a href="https://www.nasa.gov/news-release/nasas-record-setting-opportunity-rover-mission-on-mars-comes-to-end">NASA’s Record-Setting Opportunity Rover Mission on Mars Comes to End</a><small>NASA, February 2019</small></li>
@@ -815,7 +978,7 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
   <div class="wrap">
     <div>
       <h2>Adventures with Oppy</h2>
-      <p>A team project for the 2026 NASA Space Apps Challenge. This project isn’t affiliated with or endorsed by NASA.</p>
+      <p>A team project for the 2026 NASA Space Apps Challenge.</p>
     </div>
     <div>
       <h2>How we used AI</h2>
@@ -829,6 +992,11 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
   <div id="m3d-body"></div>
 </dialog>
 
+<dialog class="lightbox" id="lightbox" aria-label="Enlarged image">
+  <div id="lb-body"></div>
+  <div class="lb-bar"><p id="lb-cap"></p><button class="ctl" type="button" id="lb-close">Close</button></div>
+</dialog>
+
 <aside class="edit-panel" id="edit-panel" aria-label="Draft checklist"></aside>
 
 <script>
@@ -838,10 +1006,7 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
 /* ===================== SETTINGS =====================
    Paste your links between the quotes. Anything left empty stays hidden. */
 const SITE = {
-  video:   "",   // Your 30-second video: a YouTube, Vimeo, or Google Drive link
-  play:    "",   // Where judges can play or download the game
-  code:    "",   // Your public code repository (optional)
-  project: ""    // Your Space Apps project page (optional)
+  video: ""   // Your 30-second video: paste a YouTube, Vimeo, or Google Drive link between the quotes
 };
 /* ==================================================== */
 
@@ -866,7 +1031,7 @@ const PARTS = [
   {id:'mb',      name:'Mössbauer spectrometer',  short:'Identifies minerals that contain iron.',         unlock:'Identifying iron minerals',    text:"The Moessbauer spectrometer used gamma rays to identify iron minerals and found six peaks at Berry Bowl, the fingerprint of hematite."}
 ];
 /* ---------- CAD gallery: one card per model. Edit names, captions, or add/remove lines here. ----------
-   Each card looks for assets/cad/<file>.png (or .jpg, .gif, .mp4). */
+   Each card looks for cad/<file>.png (or .jpg, .gif, .mp4). */
 const CAD_MODELS = [
   {file:'wheels',     name:'Wheels',                   caption:'Six wheels, each with its own motor.'},
   {file:'suspension', name:'Rocker-bogie suspension',  caption:'Lets Oppy roll over rocks bigger than a wheel.'},
@@ -1388,14 +1553,14 @@ async function findFile(base, kinds){
 const ANY = {img:['png','jpg','gif'], vid:['mp4']};
 async function fillSlot(slot){
   const url = await findFile(slot.dataset.base, ANY);
-  if (url){ slot.classList.add('found'); slot.prepend(mediaEl(url, slot.dataset.alt || '')); MEDIA[slot.dataset.key] = url; }
+  if (url){ slot.classList.add('found'); slot.prepend(mediaEl(url, slot.dataset.alt || '')); MEDIA[slot.dataset.key] = url; if (typeof makeZoomable === 'function') makeZoomable(slot); else slot.dataset.zoom = '1'; }
   return url;
 }
 
 // CAD gallery cards
 const gallery = $('#gallery');
 CAD_MODELS.forEach(m => {
-  gallery.insertAdjacentHTML('beforeend', `<figure><div class="slot" data-base="assets/cad/${m.file}" data-key="cad-${m.file}" data-alt="Our CAD model: ${esc(m.name)}"><div class="ph"><strong>CAD render</strong><code>assets/cad/${m.file}.png</code></div></div><figcaption><b>${esc(m.name)}</b>${esc(m.caption)}</figcaption></figure>`);
+  gallery.insertAdjacentHTML('beforeend', `<figure><div class="slot" data-base="cad/${m.file}" data-key="cad-${m.file}" data-alt="Our CAD model: ${esc(m.name)}"><div class="ph"><strong>CAD render</strong><code>cad/${m.file}.png</code></div></div><figcaption><b>${esc(m.name)}</b>${esc(m.caption)}</figcaption></figure>`);
 });
 
 // Links
@@ -1431,6 +1596,249 @@ const trailerReady = (async () => {
 const slotJobs = $$('.slot[data-base]').map(fillSlot);
 loadPart(0);
 Promise.all(slotJobs).then(() => { if (MEDIA['cad-' + DIG_PICTURE[PARTS[cur].id]]) setArt(PARTS[cur].id); });
+
+
+/* ===================== Click to enlarge (CAD renders and screenshots) ===================== */
+const lightbox = $('#lightbox');
+function openLightbox(slot){
+  const url = MEDIA[slot.dataset.key]; if (!url) return;
+  const body = $('#lb-body'); body.innerHTML = '';
+  const el = mediaEl(url, slot.dataset.alt || '');
+  if (el.tagName === 'VIDEO'){ el.controls = true; }
+  body.appendChild(el);
+  const cap = slot.closest('figure') && slot.closest('figure').querySelector('figcaption');
+  $('#lb-cap').textContent = cap ? cap.innerText.trim().replace(/\s*\n+\s*/g, ': ') : (slot.dataset.alt || '');
+  lightbox.showModal();
+}
+function makeZoomable(slot){
+  slot.classList.add('zoomable'); slot.tabIndex = 0; slot.setAttribute('role', 'button');
+  slot.setAttribute('aria-label', 'Enlarge: ' + (slot.dataset.alt || 'image'));
+  slot.addEventListener('click', () => openLightbox(slot));
+  slot.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLightbox(slot); } });
+}
+$('#lb-close').addEventListener('click', () => lightbox.close());
+lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.close(); });
+lightbox.addEventListener('close', () => { $('#lb-body').innerHTML = ''; });
+
+/* ===================== Arm minigames ===================== */
+function svgPoint(svg, e){ const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); }
+
+// 1. Rock abrasion tool: follow the circle to grind, then brush
+(function(){
+  const box = $('#rat-game'), svg = $('svg', box), R = rng(21);
+  const target = $('.rg-target', svg), bar = $('.mg-bar i', box), status = $('.mg-status', box);
+  const btn = $('.mg-start', box), skip = $('.mg-skip', box);
+  const fresh = $('.rg-fresh', svg), cuts = $('.rg-cuts', svg), dust = $('.rg-dust', svg);
+  let lam = ''; for (let y = 12; y < 300; y += 13){ const w = (R() - .5) * 4; lam += `<path d="M0 ${y} Q75 ${r1(y + w)} 150 ${y} T300 ${y}"/>`; }
+  $('.rg-lam', svg).innerHTML = lam;
+  // gray dots and decoy pebbles already poking out of the surface
+  let out = '';
+  [[44,52],[262,70],[236,250],[58,236],[150,28],[276,168],[120,92],[190,206]].forEach(([x,y], i) => {
+    out += i % 3 === 2
+      ? `<path d="M${x-6} ${y+3} L${x-2} ${y-5} L${x+6} ${y-3} L${x+5} ${y+4}Z" fill="#8A6448"/>`
+      : `<circle cx="${x}" cy="${y}" r="5.5" fill="#6B6661"/><circle cx="${x-1.6}" cy="${y-1.8}" r="1.8" fill="#9A958F"/>`;
+  });
+  $('.rg-out', svg).innerHTML = out;
+  let fr = '<circle cx="150" cy="150" r="104" fill="#B49A77"/>';
+  for (let r = 8; r < 104; r += 7) fr += `<circle cx="150" cy="150" r="${r}" fill="none" stroke="#A3896A" stroke-width=".8"/>`;
+  fresh.innerHTML = fr;
+  let cu = '';
+  [[118,128],[176,112],[152,170],[104,186],[196,176],[140,86]].forEach(([x,y]) => { cu += `<circle cx="${x}" cy="${y}" r="7.5" fill="#77716B" stroke="#4B4743" stroke-width="1"/><circle cx="${x}" cy="${y}" r="3.6" fill="none" stroke="#9A948D" stroke-width="1"/>`; });
+  cuts.innerHTML = cu;
+  let du = '<circle cx="150" cy="150" r="104" fill="#C8A47A"/>';
+  for (let i = 0; i < 90; i++){ const a = R() * Math.PI * 2, d = Math.sqrt(R()) * 100; du += `<circle cx="${r1(150 + Math.cos(a) * d)}" cy="${r1(150 + Math.sin(a) * d)}" r="${r1(1 + R() * 2.5)}" fill="#E0C49B" opacity=".8"/>`; }
+  dust.innerHTML = du;
+
+  const C = 150, PATH = 78;
+  let phase = 'idle', prog = 0, ang = -Math.PI / 2, last = 0, raf = 0, ptr = null;
+  svg.addEventListener('pointermove', e => { ptr = svgPoint(svg, e); });
+  svg.addEventListener('pointerdown', e => { ptr = svgPoint(svg, e); });
+  svg.addEventListener('pointerleave', () => { ptr = null; });
+  function draw(){
+    const x = C + Math.cos(ang) * PATH, y = C + Math.sin(ang) * PATH;
+    target.setAttribute('transform', `translate(${r1(x)} ${r1(y)})`);
+    const inside = !!ptr && Math.hypot(ptr.x - x, ptr.y - y) < 31;
+    target.classList.toggle('hit', inside);
+    bar.style.width = (prog * 100) + '%';
+    if (phase === 'grind') fresh.style.opacity = prog;
+    if (phase === 'brush'){ dust.style.opacity = 1 - prog; cuts.style.opacity = prog; }
+    return inside;
+  }
+  function tick(t){
+    const dt = last ? Math.min(.05, (t - last) / 1000) : 0; last = t;
+    ang += (phase === 'grind' ? 1.3 : -1.55) * dt;
+    const inside = draw();
+    prog = Math.max(0, Math.min(1, prog + (inside ? .3 : -.17) * dt));
+    if (prog >= 1){ advance(); return; }
+    raf = requestAnimationFrame(tick);
+  }
+  function advance(){
+    cancelAnimationFrame(raf);
+    if (phase === 'grind'){
+      phase = 'brush'; prog = 0; fresh.style.opacity = 1; dust.style.opacity = 1; last = 0;
+      status.textContent = 'Ground. Now brush the dust away the same way.';
+      raf = requestAnimationFrame(tick);
+    } else {
+      phase = 'done'; prog = 1; draw(); dust.style.opacity = 0; cuts.style.opacity = 1; fresh.style.opacity = 1;
+      target.style.display = 'none';
+      status.textContent = 'Small gray dots are showing in the fresh circle. Time for a closer look.';
+      btn.textContent = 'Play again'; btn.hidden = false; skip.hidden = true;
+    }
+  }
+  btn.addEventListener('click', () => {
+    phase = 'grind'; prog = 0; last = 0; fresh.style.opacity = 0; dust.style.opacity = 0; cuts.style.opacity = 0;
+    target.style.display = ''; btn.hidden = true; skip.hidden = false;
+    status.textContent = 'Keep your cursor inside the moving circle to grind.';
+    raf = requestAnimationFrame(tick);
+  });
+  skip.addEventListener('click', () => { phase = 'brush'; advance(); });
+  draw();
+})();
+
+// 2. Microscopic Imager: find the round grains among decoys
+(function(){
+  const box = $('#mi-game'), svg = $('svg', box), R = rng(5);
+  const status = $('.mg-status', box), count = $('.mi-count', box);
+  let sand = '';
+  for (let i = 0; i < 420; i++){ const g = 120 + Math.floor(R() * 70); sand += `<circle cx="${r1(R() * 300)}" cy="${r1(R() * 300)}" r="${r1(.6 + R() * 1.8)}" fill="rgb(${g},${g},${g})" opacity=".7"/>`; }
+  $('.mi-sand', svg).innerHTML = sand;
+  const blob = (cx, cy, r, jit, n, seed) => { const Rb = rng(seed); let d = ''; for (let k = 0; k < n; k++){ const a = k / n * Math.PI * 2, rr = r + (Rb() - .5) * jit; d += (k ? 'L' : 'M') + r1(cx + Math.cos(a) * rr) + ' ' + r1(cy + Math.sin(a) * rr); } return d + 'Z'; };
+  // A real grain has all three traits. Every decoy misses at least one, and "why" names it.
+  const ITEMS = [
+    {ok:true, shape:'<circle cx="92" cy="92" r="14" fill="url(#mi-smooth)"/>', hit:[92,92,19]},
+    {ok:true, shape:'<circle cx="198" cy="78" r="14" fill="url(#mi-smooth)"/>', hit:[198,78,19]},
+    {ok:true, shape:'<circle cx="152" cy="168" r="14" fill="url(#mi-smooth)"/>', hit:[152,168,19]},
+    {ok:true, shape:'<circle cx="84" cy="200" r="14" fill="url(#mi-smooth)"/>', hit:[84,200,19]},
+    {ok:true, shape:'<circle cx="214" cy="214" r="14" fill="url(#mi-smooth)"/>', hit:[214,214,19]},
+    {why:'Not perfectly round: it’s stretched into an oval.', shape:'<ellipse cx="136" cy="112" rx="19" ry="10" transform="rotate(24 136 112)" fill="url(#mi-smooth)"/>', hit:[136,112,22]},
+    {why:'Wrong size: it’s much bigger than the others.', shape:'<circle cx="240" cy="148" r="24" fill="url(#mi-smooth)"/>', hit:[240,148,28]},
+    {why:'Wrong size: it’s much smaller than the others.', shape:'<circle cx="56" cy="140" r="6.5" fill="url(#mi-smooth)"/>', hit:[56,140,12]},
+    {why:'Not smooth: its surface is rough and bumpy.', shape:`<path d="${blob(160,236,14,4.2,22,3)}" fill="#8A8A8A" stroke="#5E5E5E" stroke-width="1"/><circle cx="156" cy="232" r="1.6" fill="#555"/><circle cx="165" cy="240" r="1.4" fill="#555"/><circle cx="162" cy="229" r="1.2" fill="#666"/>`, hit:[160,236,19]},
+    {why:'Not round: it has flat sides and sharp corners. That’s a pebble.', shape:'<path d="M98 236 L112 226 L127 233 L125 250 L108 256 L95 248Z" fill="#7C7C7C" stroke="#555" stroke-width="1"/>', hit:[111,241,19]},
+    {why:'Not round and not smooth: it’s a loose clump of dust.', shape:'<g filter="url(#mi-blur)" fill="#C9C9C9"><circle cx="236" cy="96" r="7"/><circle cx="246" cy="102" r="6"/><circle cx="240" cy="108" r="5"/><circle cx="229" cy="104" r="4.5"/><circle cx="250" cy="93" r="4"/></g>', hit:[240,100,18]},
+    {why:'That’s a crack in the rock, not a grain. It isn’t round at all.', shape:'<path d="M36 176 L52 170 L60 178 L78 166 L94 170" fill="none" stroke="#3C3C3C" stroke-width="2.4" stroke-linecap="round"/>', hit:[64,172,18]}
+  ];
+  const host = $('.mi-items', svg);
+  let found = 0, mistakes = 0;
+  function build(){
+    found = 0; mistakes = 0;
+    host.innerHTML = ITEMS.map((it, i) => `<g class="mi-item" tabindex="0" role="button" aria-label="Object ${i + 1}" data-i="${i}">${it.shape}<circle class="hit" cx="${it.hit[0]}" cy="${it.hit[1]}" r="${it.hit[2]}"/></g>`).join('');
+    // shuffle keyboard order so tabbing doesn't give the answer away
+    const nodes = $$('.mi-item', host), order = nodes.map((n, k) => k).sort(() => R() - .5);
+    order.forEach((k, j) => nodes[k].setAttribute('aria-label', 'Object ' + (j + 1)));
+    count.textContent = 'Round grains found: 0 of 5';
+    status.textContent = 'Find the 5 grains that are perfectly round, the same size, and smooth.';
+  }
+  function pick(g){
+    const it = ITEMS[+g.dataset.i];
+    if (g.classList.contains('found')) return;
+    if (it.ok){
+      g.classList.add('found'); found++;
+      count.textContent = `Round grains found: ${found} of 5`;
+      status.textContent = found < 5 ? 'Yes: round, the right size, and smooth.' : `All 5 round grains found${mistakes ? '' : ' with no mistakes'}. They match each other perfectly. What are they made of? Time for the APXS.`;
+    } else {
+      mistakes++; g.classList.add('wrong'); setTimeout(() => g.classList.remove('wrong'), 900);
+      status.textContent = 'Not a round grain. ' + it.why;
+    }
+  }
+  host.addEventListener('click', e => { const g = e.target.closest('.mi-item'); if (g) pick(g); });
+  host.addEventListener('keydown', e => { const g = e.target.closest('.mi-item'); if (g && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); pick(g); } });
+  $('.mi-reset', box).addEventListener('click', build);
+  build();
+})();
+
+// 3. APXS: fishing-style bar keeps the instrument steady
+(function(){
+  const box = $('#apxs-game'), track = $('.ax-track', box), zoneEl = $('.ax-zone', box), barEl = $('.ax-bar', box);
+  const prog = $('.mg-bar i', box), status = $('.mg-status', box), head = $('.ax-head', box);
+  const startBtn = $('.ax-start', box), holdBtn = $('.ax-hold', box);
+  const ZW = .24, BW = .07;
+  let rock = 'a', running = false, holding = false, pos = .1, vel = 0, zone = .4, zoneTo = .4, nextMove = 0, p = 0, drift = 0, last = 0, raf = 0, t0 = 0;
+  $$('.ax-rock .mg-btn', box).forEach(b => b.addEventListener('click', () => {
+    if (running) return;
+    rock = b.dataset.rock;
+    $$('.ax-rock .mg-btn', box).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  }));
+  const press = on => { if (!running) return; holding = on; holdBtn.classList.toggle('held', on); };
+  [track, holdBtn].forEach(el => {
+    el.addEventListener('pointerdown', e => { e.preventDefault(); press(true); });
+    el.addEventListener('pointerup', () => press(false));
+    el.addEventListener('pointerleave', () => press(false));
+    el.addEventListener('pointercancel', () => press(false));
+  });
+  holdBtn.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); press(true); } });
+  holdBtn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') press(false); });
+  function draw(){
+    zoneEl.style.left = (zone * 100) + '%'; zoneEl.style.width = (ZW * 100) + '%';
+    barEl.style.left = (pos * 100) + '%'; barEl.style.width = (BW * 100) + '%';
+    prog.style.width = (p * 100) + '%';
+  }
+  function tick(t){
+    const dt = last ? Math.min(.05, (t - last) / 1000) : 0; last = t;
+    if (t > nextMove){ zoneTo = Math.random() * (1 - ZW); nextMove = t + 700 + Math.random() * 900; }
+    zone += Math.sign(zoneTo - zone) * Math.min(Math.abs(zoneTo - zone), .38 * dt);
+    vel += (holding ? 2.4 : -2.4) * dt; vel = Math.max(-1.1, Math.min(1.1, vel));
+    pos += vel * dt;
+    if (pos < 0){ pos = 0; vel = Math.abs(vel) * .25; }
+    if (pos > 1 - BW){ pos = 1 - BW; vel = -Math.abs(vel) * .25; }
+    const c = pos + BW / 2, inside = c > zone && c < zone + ZW;
+    track.classList.toggle('in', inside);
+    p = Math.max(0, Math.min(1, p + (inside ? .24 : -.14) * dt));
+    drift = Math.max(0, Math.min(1, drift + (inside ? -1.5 : 1) * dt));
+    const k = (t - t0) / 1000;
+    head.setAttribute('transform', `translate(${r1(Math.sin(k * 2.3) * 26 * drift)} ${r1(Math.cos(k * 1.7) * 14 * drift)})`);
+    draw();
+    if (p >= 1){ finish(); return; }
+    raf = requestAnimationFrame(tick);
+  }
+  function finish(){
+    running = false; holding = false; cancelAnimationFrame(raf);
+    holdBtn.hidden = true; holdBtn.classList.remove('held'); startBtn.hidden = false; startBtn.textContent = 'Scan again';
+    head.setAttribute('transform', '');
+    status.textContent = rock === 'a' ? 'Scan complete: iron-rich, consistent with hematite. On to the Mössbauer spectrometer.' : 'Scan complete: no iron boost here. These grains are something else. Find another rock.';
+  }
+  startBtn.addEventListener('click', () => {
+    running = true; p = 0; pos = .1; vel = 0; zone = .4; drift = 0; last = 0; nextMove = 0; t0 = performance.now();
+    startBtn.hidden = true; holdBtn.hidden = false; holdBtn.focus();
+    status.textContent = 'Hold to push the bar right. Keep it inside the blue zone so the APXS stays on its mark.';
+    raf = requestAnimationFrame(tick);
+  });
+  draw();
+})();
+
+// 4. Mössbauer: scan a rock and read the graph (peaks point up, as on the rover)
+(function(){
+  const box = $('#mb-game'), svg = $('svg', box), line = $('.mb-line', svg), label = $('.mb-label', svg), status = $('.mg-status', box);
+  const X0 = 22, X1 = 304, Y0 = 168, Y1 = 40, V = 10;
+  const sx = v => X0 + (v + V) / (2 * V) * (X1 - X0), sy = y => Y0 - y * (Y0 - Y1);
+  let ax = `<path class="axis" d="M${X0} ${Y0} H${X1}"/>`;
+  [-10,-5,0,5,10].forEach(v => { ax += `<path class="axis" d="M${r1(sx(v))} ${Y0} v5"/><text class="tick" x="${r1(sx(v))}" y="${Y0 + 16}">${v}</text>`; });
+  ax += `<text class="tick" x="${(X0 + X1) / 2}" y="${Y0 + 29}">Velocity (mm/s)</text>`;
+  $('.mb-axes', svg).innerHTML = ax;
+  // Peak positions follow real Mössbauer parameters for these minerals
+  const SPECTRA = {
+    olivine:  {peaks:[[-.35,1],[2.65,1]], name:'Two peaks: olivine', msg:'Two peaks: olivine, a volcanic mineral with iron in it. Not hematite. Find another rock.'},
+    pyroxene: {peaks:[[.15,1],[2.15,1]], name:'Two peaks: pyroxene', msg:'Two peaks, closer together: pyroxene, another volcanic mineral. Not hematite. Find another rock.'},
+    hematite: {peaks:[[-8,1],[-4.3,.67],[-.6,.33],[1.4,.33],[5.1,.67],[8.7,1]], name:'Six peaks: hematite', msg:'Six peaks: hematite. Case closed! The round grains are hematite, the same mineral the orbiter saw from space. These are the blueberries.'}
+  };
+  const lor = (x, m, w) => 1 / (1 + ((x - m) / w) ** 2);
+  function show(key){
+    const sp = SPECTRA[key]; let d = '';
+    for (let i = 0; i <= 400; i++){ const v = -V + i / 400 * 2 * V; let y = .05; sp.peaks.forEach(([m, h]) => y += .85 * h * lor(v, m, .28)); d += (i ? ' L' : 'M') + r1(sx(v)) + ' ' + r1(sy(y)); }
+    line.setAttribute('d', d); label.textContent = '';
+    status.textContent = 'Scanning...';
+    const len = line.getTotalLength();
+    line.style.transition = 'none'; line.style.strokeDasharray = len; line.style.strokeDashoffset = RM ? 0 : len;
+    void line.getBoundingClientRect();
+    line.style.transition = RM ? 'none' : 'stroke-dashoffset 1.4s ease-out';
+    line.style.strokeDashoffset = 0;
+    setTimeout(() => { label.textContent = sp.name; status.textContent = sp.msg; }, RM ? 0 : 1400);
+  }
+  $$('.mb-rocks .mg-btn', box).forEach(b => b.addEventListener('click', () => {
+    $$('.mb-rocks .mg-btn', box).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    show(b.dataset.mineral);
+  }));
+})();
 
 // Optional: 3D models (assets/models/<part>.glb) open in a viewer you can spin
 const dlg = $('#m3d');
@@ -1468,7 +1876,6 @@ if (EDIT){
   Promise.all([trailerReady].concat(slotJobs)).then(() => {
     const items = [];
     if (!MEDIA.trailer) items.push('Trailer: paste your video link into <code>SITE.video</code>, or add <code>assets/trailer.mp4</code>');
-    if (!SITE.play) items.push('Play link: paste it into <code>SITE.play</code>');
     $$('.slot[data-base]').forEach(s => { if (!s.classList.contains('found')) items.push(`Missing file: <code>${s.dataset.base}.png</code> (or .jpg, .gif, .mp4)`); });
     const fills = $$('.fill').length;
     if (fills) items.push(`${fills} [bracketed] placeholders left in index.html. Search for <code>class="fill"</code>.`);
