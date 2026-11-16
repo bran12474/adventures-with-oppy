@@ -1006,7 +1006,7 @@ h3{margin:0 0 12px;font-size:25px;line-height:1.15;font-weight:740;font-stretch:
 /* ===================== SETTINGS =====================
    Paste your links between the quotes. Anything left empty stays hidden. */
 const SITE = {
-  video: ""   // Your 30-second video: paste a YouTube, Vimeo, or Google Drive link between the quotes
+  video: "https://drive.google.com/file/d/1PrQWmrSu59d7geh_l8ZL-K2g_M-w4zWx/view?usp=sharing"   // Your 30-second video: paste a YouTube, Vimeo, or Google Drive link between the quotes
 };
 /* ==================================================== */
 
@@ -1578,7 +1578,7 @@ function embedFor(link){
 }
 const videoBox = $('#video');
 const trailerReady = (async () => {
-  const src = embedFor(https://drive.google.com/file/d/1PrQWmrSu59d7geh_l8ZL-K2g_M-w4zWx/view?usp=sharing);
+  const src = embedFor(SITE.video);
   if (src){
     videoBox.innerHTML = `<iframe src="${src}" title="Adventures with Oppy gameplay video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
     MEDIA.trailer = src; return;
